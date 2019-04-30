@@ -3,21 +3,21 @@ services:
     - docker
     
 before_install:
-    - docker build -t thomasknott/multi-docker-v2 -f ./client/Dockerfile.dev ./client
+    - docker build -t knottthomas/multi-docker-v2 -f ./client/Dockerfile.dev ./client
     
 script:
-    - docker run thomasknott/multi-docker-v2 npm test -- --coverage
+    - docker run knottthomas/multi-docker-v2 npm test -- --coverage
     
 after_success:
-    - docker build -t thomasknott/multi-client ./client
-    - docker build -t thomasknott/multi-nginx ./nginx
-    - docker build -t thomasknott/multi-server ./server
-    - docker build -t thomasknott/multi-worker ./worker
+    - docker build -t knottthomas/multi-client ./client
+    - docker build -t knottthomas/multi-nginx ./nginx
+    - docker build -t knottthomas/multi-server ./server
+    - docker build -t knottthomas/multi-worker ./worker
     # Log in to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Take those images and push them to docker hub
-    - docker push thomasknott/multi-client
-    - docker push thomasknott/multi-nginx
-    - docker push thomasknott/multi-server
-    - docker push thomasknott/multi-worker
+    - docker push knottthomas/multi-client
+    - docker push knottthomas/multi-nginx
+    - docker push knottthomas/multi-server
+    - docker push knottthomas/multi-worker
     
