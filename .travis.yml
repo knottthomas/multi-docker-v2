@@ -1,0 +1,23 @@
+sudo: required
+services:
+    - docker
+    
+before_install:
+    - docker build -t thomasknott/multi-docker -f ./client/Dockerfile.dev ./client
+    
+script:
+    - docker run thomasknott/multi-docker npm test --coverage
+    
+after_success:
+    - docker build -t thomasknott/multi-client ./client
+    - docker build -t thomasknott/multi-nginx ./nginx
+    - docker build -t thomasknott/multi-server ./server
+    - docker build -t thomasknott/multi-worker ./worker
+    # Log in to the docker CLI
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Take those images and push them to docker hub
+    - docker push thomasknott/multi-client
+    - docker push thomasknott/multi-nginx
+    - docker push thomasknott/multi-server
+    - docker push thomasknott/multi-worker
+    
