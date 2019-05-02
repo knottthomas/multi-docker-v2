@@ -6,7 +6,7 @@
 			"image": "knottthomas/multi-client",
 			"hostname": "client",
 			"essential": false,
-			"memory": 512
+			"memory": 256
 		},
 		{
 			"name": "server",
@@ -26,8 +26,8 @@
 			"name": "nginx",
 			"image": "knottthomas/multi-nginx",
 			"hostname": "nginx",
-			"essential": true,
-			"memory": 128,
+			"essential": false,
+			"memory": 256,
 			"portMappings": [
 				{
 					"hostPort": 80,
