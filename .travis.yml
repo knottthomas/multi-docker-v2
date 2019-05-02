@@ -9,22 +9,22 @@ script:
     - docker run knottthomas/multi-docker-v2 npm test -- --coverage
     
 after_success:
-    - docker build -t knottthomas/multi-worker ./worker
-    - docker build -t knottthomas/multi-server ./server
     - docker build -t knottthomas/multi-client ./client
     - docker build -t knottthomas/multi-nginx ./nginx
+    - docker build -t knottthomas/multi-server ./server
+    - docker build -t knottthomas/multi-worker ./worker
     # Log in to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Take those images and push them to docker hub
-    - docker push knottthomas/multi-worker
-    - docker push knottthomas/multi-server
     - docker push knottthomas/multi-client
     - docker push knottthomas/multi-nginx
+    - docker push knottthomas/multi-server
+    - docker push knottthomas/multi-worker
     
 deploy:
     provider: elasticbeanstalk
     region: us-east-2
-    app: multi-docker
+    app: multi-docker-v2
     env: MultiDocker-env
     bucket_name: elasticbeanstalk-us-east-2-594104448216
     on:
